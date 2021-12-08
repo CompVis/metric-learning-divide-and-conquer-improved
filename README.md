@@ -157,8 +157,7 @@ fixed |  Margin/Distance	| 90.78 | 92.89 | __94.01__ -- 96.18
 learn |  Margin/Distance    | 90.70 | 92.68 | 93.93 -- 95.99 
 
 
-_Disclaimer: The results above are slightly different from those on the paper, as the results in the paper were obtained before code refactoring and 
-with PyTorch (0.4.1) and Faiss (< 1.5). So there may be small deviations in results based on the Software (different PyTorch/Cuda versions) and Hardware (e.g. between P100 and RTX GPUs) used to run these experiments._
+_Disclaimer: The results above are slightly different from those on the paper, as they were obtained before the code refactoring and with PyTorch (0.4.1) and Faiss (1.4.0). Some deviations in results based on different PyTorch/Cuda/Faiss versions and hardware (e.g. between P100 and RTX GPUs) are to be expected._
 
 
 ## Related Repos
