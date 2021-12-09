@@ -47,6 +47,7 @@ Besides, also consider the total number of different classes in your dataset and
 - **--batch-sampler**: data sampler used to generate training batches, check `/dataset/sampler.py` for details.
 - **--nb-epochs**: the maximum training epochs.
 - **--mod-epoch**: division frequency in the paper - the number of training epochs between consecutive divisions.
+- **--wandb-enabled**: enable the [Weights&Biases](https://wandb.ai/site) logging. Please change the w&b initial setting at the last part of `/experiment/margin_loss_resnet50.py` accordingly, if you enable it.
 
 _Note:_ For exact settings for different datasets, please check the original paper. For arguments not mentioned above, 
 please check `/experiment/margin_loss_resnet50.py` for explanation.

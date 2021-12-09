@@ -492,9 +492,8 @@ def make_args():
     args_exp['recluster']['mod_epoch'] = cli_args.pop('mod_epoch')
     args_exp['album'] = cli_args.pop('album')
 
-    assert args_exp['mod_epoch_freeze'] <= args_exp['recluster']['mod_epoch']
-    if args_exp['mod_epoch_freeze'] == args_exp['recluster']['mod_epoch']:
-        logging.info('Attention! While num_clsuters > 1 Backbone will always be frozen!')
+    assert args_exp['mod_epoch_freeze'] < args_exp['recluster']['mod_epoch'], \
+        'Attention! While num_clsuters > 1 Backbone will always be frozen!'
 
     if cli_args['batch_sampler'] == 'npairs':
         args_exp['dataloader']['train']['_batch_sampler'] = None
@@ -710,7 +709,7 @@ def make_args():
     base.recursive_dict_update(final_args, args_exp)
     if args_exp['ratio_classes'] != 1:
         for x in ['init', 'train', 'eval']:
-            final_args['dataset']['types'][
+          final_args['dataset']['types'][
                 args_exp['dataset']['selected']
             ]['classes'][x] = reduce_classes(
                 crange = final_args['dataset']['types'][
@@ -719,14 +718,13 @@ def make_args():
                 ratio = args_exp['ratio_classes']
             )
 
-
+    # wandb setting
     if final_args['wandb_enabled']:
         import wandb
-        wandb.init(entity='defualt',
-                   project="DivideAndConquer",
+        wandb.init(project="DivideAndConquer",
                    name=args_exp['log']['name'],
                    notes='notes',
-                   tags=['learnable_masks'],
+                   tags=['default'],
                    config=cli_args_orig)
 
     return final_args

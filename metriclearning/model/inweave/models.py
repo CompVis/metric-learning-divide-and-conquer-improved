@@ -24,13 +24,6 @@ model_architectures = {
     'bn_inception': bn_inception
 }
 
-_sz_kernel = {
-    torchvision.models.AlexNet: 6,
-    torchvision.models.VGG: 7,
-    torchvision.models.ResNet: 7, # if h, w = 224, 224, then 7
-    BNInception: 7
-}
-
 _sz_features = {
     # ResNet hardcoded in `resnet` module
     torchvision.models.AlexNet: 256,
@@ -44,27 +37,6 @@ def log_verbose(message, args, with_print=False):
         logging.debug(message)
     if with_print:
         print(message)
-
-
-def _sz_features_pooled(model):
-    """
-    An example function that one should NOT use -- a reminder to myself.
-    Make sure that evaluation mode is on, otherwise batchnorm params
-    change and destroy the model. I used this function once when I tried to
-    merge BNInception into `embed_model`. R@1 decreases from 32 to 0.
-    I also experienced the same thing while implementing Proxy NCA: when I
-    evaluated the model, the performance deteriorated, since BatchNorm adapted
-    to the evaluation set.
-    """
-    with torch.no_grad():
-        # if leaving out `model.eval()`, then model becomes useless
-        model.eval()
-        # choose arbitrary parameter of model, save its device destination
-        dev = list(model.parameters())[0].device
-        z = model.features(torch.zeros(1, 3, 227, 227).to(dev))
-        z = MaxPool2d(z).view(-1)
-        model.sz_features_output = z.shape[0]
-        model.train()
 
 
 def init_splitted(layer, weight_init, nb_clusters, sz_embedding, **kwargs):
@@ -190,10 +162,6 @@ def embed_model(model, args, sz_embedding, normalize_output=True):
         else:
             features_parameters = model.features.parameters()
 
-        # model.parameters_by_kind = {
-        #     'embedding': model.embedding.parameters(),
-        #     'features': features_parameters
-        # }
 
         model.parameters_dict = make_parameters_dict(
             model = model,
@@ -287,8 +255,7 @@ def embed_model(model, args, sz_embedding, normalize_output=True):
                         log_verbose('Reset optimizer params for masks...\n' +\
                                     str(model.opt.param_groups[-1]), args)
                 else:
-                    # HERE
-                    # using fixed mask, ones for selected indx and zeros for the rest
+                    # to use fixed mask: ones for selected idx and zeros for the rest
                     # NOTE: still requires grad, but remember to exclude them from optimizer
                     assert args['masking_init'] == 'ones', 'Fixed masks should use ones as initial values'
 
