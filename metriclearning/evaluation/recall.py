@@ -9,11 +9,8 @@ from .. import faissext
 TORCH_SKLEARN_BACKEND = 'torch+sklearn'
 FAISS_BACKEND = 'faiss'
 FAISS_GPU_BACKEND = 'faiss-gpu'
-_backends_ = [TORCH_SKLEARN_BACKEND, FAISS_BACKEND, FAISS_GPU_BACKEND]
 
-_DEFAULT_BACKEND_ = FAISS_BACKEND
 _DEFAULT_BACKEND_ = FAISS_GPU_BACKEND
-#_DEFAULT_BACKEND_ = TORCH_SKLEARN_BACKEND
 
 
 def assign_by_euclidian_at_k(X, T, k, gpu_id=None, backend=_DEFAULT_BACKEND_):

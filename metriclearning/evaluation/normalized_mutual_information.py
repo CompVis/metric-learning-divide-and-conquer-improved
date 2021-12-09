@@ -5,11 +5,8 @@ import torch
 TORCH_SKLEARN_BACKEND = 'torch+sklearn'
 FAISS_BACKEND = 'faiss'
 FAISS_GPU_BACKEND = 'faiss-gpu'
-_backends_ = [TORCH_SKLEARN_BACKEND, FAISS_BACKEND, FAISS_GPU_BACKEND]
 
-_DEFAULT_BACKEND_ = FAISS_BACKEND
 _DEFAULT_BACKEND_ = FAISS_GPU_BACKEND
-#_DEFAULT_BACKEND_ = TORCH_SKLEARN_BACKEND
 
 
 def cluster_by_kmeans(X, nb_clusters, gpu_id=None, backend=_DEFAULT_BACKEND_):

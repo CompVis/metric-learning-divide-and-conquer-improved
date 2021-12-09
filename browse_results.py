@@ -1,6 +1,5 @@
 import shelve
 from collections import defaultdict
-import sys
 import os
 import re
 import time
@@ -9,7 +8,6 @@ import pandas as pd
 import time
 import glob
 import argparse
-import copy
 
 
 def is_match(x):
