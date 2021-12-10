@@ -20,8 +20,8 @@ Learning by Divide and Conquer_ accepted to **TPAMI** (Sep. 2021), which is our 
 ## Usage
 ### Training:
 
-Training is done by using `train.py` and setting the respective flags, all of which are listed and explained 
-in `/experiment/margin_loss_resnet50.py`.
+Training is done by calling `python train.py` and setting the respective params, all of which are listed and explained 
+in `/experiment/margin_loss_resnet50.py` (the default setup for all our experiments). The params provided in command line will override those default ones.
 
 **A basic sample run using default parameters would like this**:
 
@@ -36,20 +36,19 @@ python train.py --experiment margin_loss_resnet50 \
                 --masking-lambda=0.01 --mask-wd-mult=1 --dataset-dir=$datadir
 ```
 
+- **--experiment margin_loss_resnet50** please keep this untouched, otherwise the args won't be read correctly.
 - **--dataset** specify the dataset that you want to train the model for, choose one of `--dataset=cub` (CUB200-2011),
 `cars` (CARS196), `sop` (Standford Online Porducts), `inshop` (In-Shop cloths retireval) or `vid` (PKU Vehicle id).
 - **--nb_clusters**: could be maximumly possible set to 16. For larger number of clusters, you may need to change the default 
-limit of opened files allowed for each process. For example, if you are a ubuntu user, `ulimit -n [twice the number of the default]` usually will do the trick. 
-Besides, also consider the total number of different classes in your dataset and the sampling strategy when you setting this value.
-- **--experiment margin_loss_resnet50** please keep this untouched, otherwise the args won't be read correctly.
+limit of opened files allowed for each process. For example, if you are a ubuntu user, `ulimit -n <twice the number of the default>` usually will do the trick. Besides, please take the total number of different classes in the dataset and the sampling strategy used into account when you setting this value.
 - **--dataset-dir**: the path to the datasets, check the *Datasets* section below.
 - **--sampler**: batchminer used to sample pairs or triplets (in embedding space) to create learning signal, check `/metriclearning/sampler` for details.
 - **--batch-sampler**: data sampler used to generate training batches, check `/dataset/sampler.py` for details.
 - **--nb-epochs**: the maximum training epochs.
 - **--mod-epoch**: division frequency in the paper - the number of training epochs between consecutive divisions.
-- **--wandb-enabled**: enable the [Weights&Biases](https://wandb.ai/site) logging. Please change the w&b initial setting at the last part of `/experiment/margin_loss_resnet50.py` accordingly, if you enable it.
+- **--wandb-enabled**: by setting this flag, you will enable the [Weights&Biases](https://wandb.ai/site) logging. Please change the w&b initial setting at the last part of `/experiment/margin_loss_resnet50.py` accordingly.
 
-_Note:_ For exact settings for different datasets, please check the original paper. For arguments not mentioned above, 
+**_Note:_** For exact settings for different datasets, please check the original paper. For arguments not mentioned above, 
 please check `/experiment/margin_loss_resnet50.py` for explanation.
 
 
